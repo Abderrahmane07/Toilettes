@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:toilettes/views/widgets/logo_widget.dart';
+import 'package:toilettes/views/screens/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(
+            title: 'coco',
+          ),
+        ),
+      );
+    });
+
     return const Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
