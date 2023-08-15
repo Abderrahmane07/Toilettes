@@ -1,35 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:toilettes/views/widgets/logo_widget.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Image here
-            Image.asset(
-              'assets/images/poop.png',
-              width: 200,
-              height: 200,
+    return const Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(),
+          LogoWidget(dimensions: 150, fontSize: 24),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: Text(
+                'Cover Up the Sound of Your Poop!',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
             ),
-            const Text(
-              'Noise to cover your poop',
-            ),
-
-            const Text(
-              'Cover up the sound of your poop!',
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
