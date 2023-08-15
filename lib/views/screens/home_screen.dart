@@ -42,8 +42,22 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SliderWidget(
                   iconDimensions: 36,
+                  iconLink: "assets/images/tassa_black.png",
+                ),
+                SizedBox(
+                  height: 36,
+                ),
+                SliderWidget(
+                  iconDimensions: 36,
+                  iconLink: "assets/images/shower_black.png",
+                ),
+                SizedBox(
+                  height: 36,
+                ),
+                SliderWidget(
+                  iconDimensions: 36,
                   iconLink: "assets/images/tap_black.png",
-                )
+                ),
               ],
             ),
             const Spacer(),

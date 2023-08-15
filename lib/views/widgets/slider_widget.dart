@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SliderWidget extends StatelessWidget {
+class SliderWidget extends StatefulWidget {
   final double iconDimensions;
   final String iconLink;
   const SliderWidget({
@@ -10,31 +10,45 @@ class SliderWidget extends StatelessWidget {
   });
 
   @override
+  State<SliderWidget> createState() => _SliderWidgetState();
+}
+
+class _SliderWidgetState extends State<SliderWidget> {
+  double _sliderValue = 20; // Initial value
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Image.asset(
-          iconLink,
-          width: iconDimensions,
-          height: iconDimensions,
+          widget.iconLink,
+          width: widget.iconDimensions,
+          height: widget.iconDimensions,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.star, color: Colors.yellow[200], size: 15),
-            // Add a slider widget here
+            const Icon(
+              Icons.volume_down_rounded,
+            ),
             SizedBox(
               width: MediaQuery.of(context).size.width - 80,
               child: Slider(
-                value: 3,
+                activeColor: Colors.redAccent[700],
+                value: _sliderValue,
                 min: 0,
-                max: 5,
-                divisions: 5,
-                label: '3',
-                onChanged: (double value) {},
+                max: 100,
+                label: _sliderValue.toStringAsFixed(1),
+                onChanged: (double value) {
+                  setState(() {
+                    _sliderValue = value;
+                  });
+                },
               ),
             ),
-            Icon(Icons.star, color: Colors.yellow[700], size: 15),
+            const Icon(
+              Icons.volume_up_rounded,
+            ),
           ],
         )
       ],
