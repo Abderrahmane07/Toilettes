@@ -11,6 +11,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool isTassaActive = true;
+  bool isShowerActive = true;
+  bool isTapActive = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            const SizedBox(height: 40),
             const LogoWidget(dimensions: 100, fontSize: 16),
             const SizedBox(height: 40),
             const Row(
@@ -38,26 +42,32 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             const SizedBox(height: 40),
-            const Column(
+            Column(
               children: [
-                SliderWidget(
-                  iconDimensions: 36,
-                  iconLink: "assets/images/tassa_black.png",
-                ),
-                SizedBox(
+                isTassaActive
+                    ? const SliderWidget(
+                        iconDimensions: 36,
+                        iconLink: "assets/images/tassa_black.png",
+                      )
+                    : const SizedBox(),
+                const SizedBox(
                   height: 36,
                 ),
-                SliderWidget(
-                  iconDimensions: 36,
-                  iconLink: "assets/images/shower_black.png",
-                ),
-                SizedBox(
+                isShowerActive
+                    ? const SliderWidget(
+                        iconDimensions: 36,
+                        iconLink: "assets/images/shower_black.png",
+                      )
+                    : const SizedBox(),
+                const SizedBox(
                   height: 36,
                 ),
-                SliderWidget(
-                  iconDimensions: 36,
-                  iconLink: "assets/images/tap_black.png",
-                ),
+                isTapActive
+                    ? const SliderWidget(
+                        iconDimensions: 36,
+                        iconLink: "assets/images/tap_black.png",
+                      )
+                    : const SizedBox(),
               ],
             ),
             const Spacer(),
