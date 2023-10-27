@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:toilettes/providers.dart';
 import 'package:toilettes/views/widgets/logo_widget.dart';
 import 'package:toilettes/views/widgets/noise_icon_widget.dart';
 import 'package:toilettes/views/widgets/slider_widget.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  bool isTassaActive = true;
-  bool isShowerActive = true;
-  bool isTapActive = false;
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final statesBool = ref.watch(statesBoolProvider);
+    bool isTassaActive = statesBool[0];
+    bool isShowerActive = statesBool[1];
+    bool isTapActive = statesBool[2];
     return Scaffold(
       body: Center(
         child: Column(
