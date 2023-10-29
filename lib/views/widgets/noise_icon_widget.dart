@@ -25,11 +25,13 @@ class NoiseIconWidget extends ConsumerWidget {
         final oList = ref.read(statesBoolProvider);
         oList[index] = !oList[index];
         ref.read(statesBoolProvider.notifier).state = [...oList];
-        final player = AudioPlayer();
         if (oList[index]) {
-          await player.play(AssetSource(soundLink));
+          await ref
+              .read(audioPlayerProvider)[index]
+              .play(AssetSource(soundLink));
         } else {
-          await player.pause();
+          print("pause");
+          await ref.read(audioPlayerProvider)[index].pause();
         }
       },
       child: Container(
