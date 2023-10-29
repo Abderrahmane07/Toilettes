@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,20 +9,28 @@ class NoiseIconWidget extends ConsumerWidget {
   final double iconDimensions;
   final double dimensions;
   final String iconLink;
+  final String soundLink;
   const NoiseIconWidget(
       {super.key,
       required this.index,
       required this.iconDimensions,
       required this.iconLink,
+      required this.soundLink,
       required this.dimensions});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         final oList = ref.read(statesBoolProvider);
         oList[index] = !oList[index];
         ref.read(statesBoolProvider.notifier).state = [...oList];
+        final player = AudioPlayer();
+        if (oList[index]) {
+          await player.play(AssetSource(soundLink));
+        } else {
+          await player.pause();
+        }
       },
       child: Container(
         height: dimensions,
