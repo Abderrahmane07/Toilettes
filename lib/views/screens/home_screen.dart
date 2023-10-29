@@ -36,7 +36,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     index: 0,
                     iconDimensions: 70,
                     iconLink: "assets/images/tassa_black.png",
-                    soundLink: "sounds/shower1.mp3",
+                    soundLink: "sounds/toilet1.mp3",
                     dimensions: 120),
                 NoiseIconWidget(
                     index: 1,
@@ -48,7 +48,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     index: 2,
                     iconDimensions: 70,
                     iconLink: "assets/images/tap_black.png",
-                    soundLink: "sounds/shower1.mp3",
+                    soundLink: "sounds/tap1.mp3",
                     dimensions: 120),
               ],
             ),
