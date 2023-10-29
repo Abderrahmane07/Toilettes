@@ -5,6 +5,8 @@ import 'package:toilettes/views/widgets/logo_widget.dart';
 import 'package:toilettes/views/widgets/noise_icon_widget.dart';
 import 'package:toilettes/views/widgets/slider_widget.dart';
 
+// The link of the resource we used for shower https://www.zapsplat.com/?s=shower&post_type=music&sound-effect-category-id=
+
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
