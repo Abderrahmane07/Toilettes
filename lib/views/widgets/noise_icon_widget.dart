@@ -17,28 +17,11 @@ class NoiseIconWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final visibilityState = ref.watch(statesBoolProvider);
-    // final isVisible = visibilityState[index];
-    return
-        // isVisible
-        // ?
-        GestureDetector(
+    return GestureDetector(
       onTap: () {
         final oList = ref.read(statesBoolProvider);
         oList[index] = !oList[index];
         ref.read(statesBoolProvider.notifier).state = [...oList];
-        // final updatedState = List.generate(visibilityState.length, (coco) {
-        //   if (coco == index) {
-        //     // Toggle the value at your specific index
-        //     return !visibilityState[index];
-        //   } else {
-        //     // Keep the other values the same
-        //     return visibilityState[index];
-        //   }
-        // });
-        // print(updatedState);
-        // ref.read(statesBoolProvider.notifier).state = updatedState;
-        // // List.generate(3, (index) => !visibilityState[index]);
       },
       child: Container(
         height: dimensions,
@@ -53,8 +36,6 @@ class NoiseIconWidget extends ConsumerWidget {
           height: iconDimensions,
         ),
       ),
-    )
-        // : const SizedBox()
-        ;
+    );
   }
 }

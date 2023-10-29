@@ -15,10 +15,10 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    // final statesBool = ref.watch(statesBoolProvider);
-    // bool isTassaActive = statesBool[0];
-    // bool isShowerActive = statesBool[1];
-    // bool isTapActive = statesBool[2];
+    final statesBool = ref.watch(statesBoolProvider);
+    bool isTassaActive = statesBool[0];
+    bool isShowerActive = statesBool[1];
+    bool isTapActive = statesBool[2];
     return Scaffold(
       body: Center(
         child: Column(
@@ -50,30 +50,40 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             const SizedBox(height: 40),
             Column(
               children: [
-                ref.watch(statesBoolProvider)[0]
+                isTassaActive
                     ? const SliderWidget(
                         iconDimensions: 36,
                         iconLink: "assets/images/tassa_black.png",
                       )
                     : const SizedBox(),
-                const SizedBox(
-                  height: 36,
-                ),
-                ref.watch(statesBoolProvider)[1]
-                    ? const SliderWidget(
+                Visibility(
+                  visible: isShowerActive,
+                  child: const Column(
+                    children: [
+                      SizedBox(
+                        height: 36,
+                      ),
+                      SliderWidget(
                         iconDimensions: 36,
                         iconLink: "assets/images/shower_black.png",
-                      )
-                    : const SizedBox(),
-                const SizedBox(
-                  height: 36,
+                      ),
+                    ],
+                  ),
                 ),
-                ref.watch(statesBoolProvider)[2]
-                    ? const SliderWidget(
+                Visibility(
+                  visible: isTapActive,
+                  child: const Column(
+                    children: [
+                      SizedBox(
+                        height: 36,
+                      ),
+                      SliderWidget(
                         iconDimensions: 36,
                         iconLink: "assets/images/tap_black.png",
-                      )
-                    : const SizedBox(),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
             const Spacer(),
