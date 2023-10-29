@@ -27,7 +27,9 @@ class NoiseIconWidget extends ConsumerWidget {
         height: dimensions,
         width: dimensions,
         decoration: BoxDecoration(
-          color: Colors.pink[50],
+          color: ref.watch(statesBoolProvider)[index]
+              ? Colors.pink[300]
+              : Colors.pink[50],
           borderRadius: BorderRadius.circular(10),
         ),
         child: Image.asset(
