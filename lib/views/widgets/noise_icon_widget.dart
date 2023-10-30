@@ -28,6 +28,10 @@ class NoiseIconWidget extends ConsumerWidget {
         if (oList[index]) {
           await ref
               .read(audioPlayerProvider)[index]
+              .setReleaseMode(ReleaseMode.loop);
+
+          await ref
+              .read(audioPlayerProvider)[index]
               .play(AssetSource(soundLink));
         } else {
           print("pause");
