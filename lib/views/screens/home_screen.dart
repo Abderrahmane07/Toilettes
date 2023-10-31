@@ -57,6 +57,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               children: [
                 isTassaActive
                     ? const SliderWidget(
+                        index: 0,
                         iconDimensions: 36,
                         iconLink: "assets/images/tassa_black.png",
                       )
@@ -69,6 +70,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         height: 36,
                       ),
                       SliderWidget(
+                        index: 1,
                         iconDimensions: 36,
                         iconLink: "assets/images/shower_black.png",
                       ),
@@ -83,6 +85,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         height: 36,
                       ),
                       SliderWidget(
+                        index: 2,
                         iconDimensions: 36,
                         iconLink: "assets/images/tap_black.png",
                       ),

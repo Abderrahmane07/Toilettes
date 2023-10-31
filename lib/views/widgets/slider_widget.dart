@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:toilettes/providers.dart';
 
-class SliderWidget extends StatefulWidget {
+class SliderWidget extends ConsumerStatefulWidget {
+  final int index;
   final double iconDimensions;
   final String iconLink;
   const SliderWidget({
     super.key,
+    required this.index,
     required this.iconDimensions,
     required this.iconLink,
   });
 
   @override
-  State<SliderWidget> createState() => _SliderWidgetState();
+  ConsumerState<SliderWidget> createState() => _SliderWidgetState();
 }
 
-class _SliderWidgetState extends State<SliderWidget> {
-  double _sliderValue = 20; // Initial value
+class _SliderWidgetState extends ConsumerState<SliderWidget> {
+  double _sliderValue = 0.2; // Initial value
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +40,13 @@ class _SliderWidgetState extends State<SliderWidget> {
               child: Slider(
                 activeColor: Colors.redAccent[700],
                 value: _sliderValue,
-                min: 0,
-                max: 100,
+                min: 0.0,
+                max: 1.0,
                 label: _sliderValue.toStringAsFixed(1),
-                onChanged: (double value) {
+                onChanged: (double value) async {
+                  await ref
+                      .read(audioPlayerProvider)[widget.index]
+                      .setVolume(value);
                   setState(() {
                     _sliderValue = value;
                   });
