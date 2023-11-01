@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../providers.dart';
 
@@ -10,18 +11,37 @@ class NoiseIconWidget extends ConsumerWidget {
   final double dimensions;
   final String iconLink;
   final String soundLink;
+  // final Function() onTap;
   const NoiseIconWidget(
       {super.key,
       required this.index,
       required this.iconDimensions,
       required this.iconLink,
       required this.soundLink,
+      // required this.onTap,
       required this.dimensions});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Future<void> _startCounting(
+      SharedPreferences prefs,
+      List<String> storedCounter,
+      int index,
+    ) async {
+      // Increment the counter every 1 second while the widget is active
+      while (ref.read(statesBoolProvider)[index]) {
+        await Future.delayed(const Duration(seconds: 1));
+        storedCounter[index] = (int.parse(storedCounter[index]) + 1).toString();
+        print(storedCounter);
+        prefs.setStringList('theList', storedCounter);
+      }
+    }
+
     return GestureDetector(
       onTap: () async {
+        final prefs = await SharedPreferences.getInstance();
+        final storedCounter = prefs.getStringList('theList') ?? ['0', '0', '0'];
+        // onTap();
         final oList = ref.read(statesBoolProvider);
         oList[index] = !oList[index];
         ref.read(statesBoolProvider.notifier).state = [...oList];
@@ -33,6 +53,16 @@ class NoiseIconWidget extends ConsumerWidget {
           await ref
               .read(audioPlayerProvider)[index]
               .play(AssetSource(soundLink));
+
+          _startCounting(prefs, storedCounter, index);
+
+          // while (oList[index]) {
+          //   await Future.delayed(const Duration(seconds: 1));
+          //   storedCounter[index] =
+          //       (int.parse(storedCounter[index]) + 1).toString();
+          //   print(storedCounter);
+          // }
+          // prefs.setStringList('theList', storedCounter);
         } else {
           print("pause");
           await ref.read(audioPlayerProvider)[index].pause();

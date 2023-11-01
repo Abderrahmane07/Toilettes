@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilettes/providers.dart';
 import 'package:toilettes/views/widgets/logo_widget.dart';
 import 'package:toilettes/views/widgets/noise_icon_widget.dart';
 import 'package:toilettes/views/widgets/slider_widget.dart';
-
-// The link of the resource we used for shower https://www.zapsplat.com/?s=shower&post_type=music&sound-effect-category-id=
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -15,6 +14,31 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  int counter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCounter();
+  }
+
+  Future<void> _loadCounter() async {
+    final prefs = await _prefs;
+    final storedCounter = prefs.getInt('counter') ?? 0;
+    setState(() {
+      counter = storedCounter;
+    });
+  }
+
+  Future<void> _incrementCounter() async {
+    final prefs = await _prefs;
+    setState(() {
+      counter++;
+    });
+    await prefs.setInt('counter', counter);
+  }
+
   @override
   Widget build(BuildContext context) {
     final statesBool = ref.watch(statesBoolProvider);
@@ -33,23 +57,35 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 NoiseIconWidget(
-                    index: 0,
-                    iconDimensions: 70,
-                    iconLink: "assets/images/tassa_black.png",
-                    soundLink: "sounds/toilet1.mp3",
-                    dimensions: 120),
+                  index: 0,
+                  iconDimensions: 70,
+                  iconLink: "assets/images/tassa_black.png",
+                  soundLink: "sounds/toilet1.mp3",
+                  dimensions: 120,
+                  // onTap: () {
+                  //   _incrementCounter();
+                  // },
+                ),
                 NoiseIconWidget(
-                    index: 1,
-                    iconDimensions: 70,
-                    iconLink: "assets/images/shower_black.png",
-                    soundLink: "sounds/shower1.mp3",
-                    dimensions: 120),
+                  index: 1,
+                  iconDimensions: 70,
+                  iconLink: "assets/images/shower_black.png",
+                  soundLink: "sounds/shower1.mp3",
+                  dimensions: 120,
+                  // onTap: () {
+                  //   _incrementCounter();
+                  // },
+                ),
                 NoiseIconWidget(
-                    index: 2,
-                    iconDimensions: 70,
-                    iconLink: "assets/images/tap_black.png",
-                    soundLink: "sounds/tap1.mp3",
-                    dimensions: 120),
+                  index: 2,
+                  iconDimensions: 70,
+                  iconLink: "assets/images/tap_black.png",
+                  soundLink: "sounds/tap1.mp3",
+                  dimensions: 120,
+                  // onTap: () {
+                  //   _incrementCounter();
+                  // },
+                ),
               ],
             ),
             const SizedBox(height: 40),
@@ -95,8 +131,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ],
             ),
             const Spacer(),
-            const Text(
-              'With using this app you saved a total of 555 litres of water!',
+            Text(
+              'With using this app you saved a total of $counter litres of water!',
             ),
             const SizedBox(
               height: 20,
