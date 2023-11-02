@@ -6,10 +6,6 @@ final statesBoolProvider = StateProvider<List<bool>>(
   (ref) => [false, false, false],
 );
 
-// final sourceIntProvider = StateProvider<List<int>>(
-//   (ref) => [0, 0, 0],
-// );
-
 final prefsProvider = FutureProvider<SharedPreferences>((ref) async {
   return await SharedPreferences.getInstance();
 });
@@ -17,8 +13,6 @@ final prefsProvider = FutureProvider<SharedPreferences>((ref) async {
 final waterVolumeProvider = StateProvider<int>(
   (ref) {
     final prefs = ref.watch(prefsProvider);
-    // final boolTest = ref.watch(statesBoolProvider);
-    // print("inside $boolTest");
     List<String> secondsList =
         prefs.value?.getStringList('theList') ?? ['0', '0', '0'];
 

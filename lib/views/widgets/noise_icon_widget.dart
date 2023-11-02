@@ -26,10 +26,10 @@ class NoiseIconWidget extends ConsumerWidget {
       List<String> storedCounter,
       int index,
     ) async {
-      // Increment the counter every 1 second while the widget is active
+      // Increment the counter every 5 seconds while the widget is active
       while (ref.read(statesBoolProvider)[index]) {
-        await Future.delayed(const Duration(seconds: 1));
-        storedCounter[index] = (int.parse(storedCounter[index]) + 1).toString();
+        await Future.delayed(const Duration(seconds: 5));
+        storedCounter[index] = (int.parse(storedCounter[index]) + 5).toString();
         print(storedCounter);
         prefs.setStringList('theList', storedCounter);
       }
