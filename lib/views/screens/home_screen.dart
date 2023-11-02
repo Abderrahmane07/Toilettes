@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilettes/providers.dart';
 import 'package:toilettes/views/widgets/logo_widget.dart';
 import 'package:toilettes/views/widgets/noise_icon_widget.dart';
@@ -14,37 +14,20 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  int counter = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadCounter();
-  }
-
-  Future<void> _loadCounter() async {
-    final prefs = await _prefs;
-    final storedCounter = prefs.getInt('counter') ?? 0;
-    setState(() {
-      counter = storedCounter;
-    });
-  }
-
-  Future<void> _incrementCounter() async {
-    final prefs = await _prefs;
-    setState(() {
-      counter++;
-    });
-    await prefs.setInt('counter', counter);
-  }
-
   @override
   Widget build(BuildContext context) {
     final statesBool = ref.watch(statesBoolProvider);
     bool isTassaActive = statesBool[0];
     bool isShowerActive = statesBool[1];
     bool isTapActive = statesBool[2];
+
+    final prefs = ref.watch(prefsProvider);
+    List<String> secondsList =
+        prefs.value?.getStringList('theList') ?? ['0', '0', '0'];
+    int litres = (int.parse(secondsList[0]) * 0.15 +
+            int.parse(secondsList[1]) * 0.25 +
+            int.parse(secondsList[2]) * 0.2)
+        .round();
     return Scaffold(
       body: Center(
         child: Column(
@@ -62,9 +45,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   iconLink: "assets/images/tassa_black.png",
                   soundLink: "sounds/toilet1.mp3",
                   dimensions: 120,
-                  // onTap: () {
-                  //   _incrementCounter();
-                  // },
                 ),
                 NoiseIconWidget(
                   index: 1,
@@ -72,9 +52,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   iconLink: "assets/images/shower_black.png",
                   soundLink: "sounds/shower1.mp3",
                   dimensions: 120,
-                  // onTap: () {
-                  //   _incrementCounter();
-                  // },
                 ),
                 NoiseIconWidget(
                   index: 2,
@@ -82,9 +59,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   iconLink: "assets/images/tap_black.png",
                   soundLink: "sounds/tap1.mp3",
                   dimensions: 120,
-                  // onTap: () {
-                  //   _incrementCounter();
-                  // },
                 ),
               ],
             ),
@@ -132,7 +106,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             const Spacer(),
             Text(
-              'With using this app you saved a total of $counter litres of water!',
+              'With using this app you saved a total of $litres liters of water!',
             ),
             const SizedBox(
               height: 20,

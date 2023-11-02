@@ -11,14 +11,12 @@ class NoiseIconWidget extends ConsumerWidget {
   final double dimensions;
   final String iconLink;
   final String soundLink;
-  // final Function() onTap;
   const NoiseIconWidget(
       {super.key,
       required this.index,
       required this.iconDimensions,
       required this.iconLink,
       required this.soundLink,
-      // required this.onTap,
       required this.dimensions});
 
   @override
@@ -41,7 +39,6 @@ class NoiseIconWidget extends ConsumerWidget {
       onTap: () async {
         final prefs = await SharedPreferences.getInstance();
         final storedCounter = prefs.getStringList('theList') ?? ['0', '0', '0'];
-        // onTap();
         final oList = ref.read(statesBoolProvider);
         oList[index] = !oList[index];
         ref.read(statesBoolProvider.notifier).state = [...oList];
@@ -55,14 +52,6 @@ class NoiseIconWidget extends ConsumerWidget {
               .play(AssetSource(soundLink));
 
           _startCounting(prefs, storedCounter, index);
-
-          // while (oList[index]) {
-          //   await Future.delayed(const Duration(seconds: 1));
-          //   storedCounter[index] =
-          //       (int.parse(storedCounter[index]) + 1).toString();
-          //   print(storedCounter);
-          // }
-          // prefs.setStringList('theList', storedCounter);
         } else {
           print("pause");
           await ref.read(audioPlayerProvider)[index].pause();
